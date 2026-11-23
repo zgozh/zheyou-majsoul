@@ -1,0 +1,25 @@
+{
+  "name": "Mortal-S42",
+  "format": "pytorch-state-dicts",
+  "file": "weights/s42-inference.pth",
+  "sha256": "e5f6955b6f19007fd65315e53291b36994493046bc118b991b959e9dc596d660",
+  "bytes": 43670035,
+  "source_checkpoint_sha256": "b1acaf81cadf980525d6a5fa0231f9100545373eeeb6cb5e5f8e72936d5fb116",
+  "phase_steps": 42800,
+  "observation_version": 4,
+  "observation_shape": [
+    1012,
+    34
+  ],
+  "action_space": 46,
+  "is_oracle": false,
+  "resnet": {
+    "conv_channels": 192,
+    "num_blocks": 40
+  },
+  "inference_parameters": 10835631,
+  "tensor_entries_including_buffers": 652,
+  "tensor_equality_to_source": true,
+  "weight_license": "apache-2.0",
+  "checkpoint_name": "S42.8k"
+}

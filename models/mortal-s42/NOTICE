@@ -1,0 +1,11 @@
+Mortal runtime source
+Upstream: https://github.com/Equim-chan/Mortal
+Commit: 0cff2b52982be5b1163aa9a62fb01f03ce91e0d2
+License: AGPL-3.0-or-later (runtime/LICENSE)
+
+This distribution includes the upstream libriichi and exe-wrapper source,
+Cargo manifests and lockfile, and mortal/model.py and mortal/engine.py.
+Upstream files retain their original content. The release-specific inference
+and build scripts are distributed under AGPL-3.0-or-later.
+
+Model weights: Apache-2.0 (https://www.apache.org/licenses/LICENSE-2.0).

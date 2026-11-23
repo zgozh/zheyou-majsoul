@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+/vendor/
+/dist/
+/configs/
+/history/
+/logs/
+/webview/
+/runtime/
+/ZheyouClient*.exe
+/local_models/deps/
+/models/**/*.bin
+/models/**/*.jar
+/models/**/*.pth
+/models/**/*.pyd

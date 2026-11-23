@@ -1,0 +1,62 @@
+[general]
+ms_first_run_completed = true
+developer_mode = false
+
+[logging]
+dir = "./logs"
+level = "info"
+all_level = "info"
+
+[bot]
+enabled = true
+
+[bot.api]
+enabled = true
+base_url = "http://127.0.0.1:25034"
+key = "zheyou-local-inference"
+model_4p = "mortal-s42"
+model_3p = "epsilon-prism-3p"
+proxy_enabled = false
+proxy = ""
+react_timeout_ms = 3000
+
+[autoplay]
+enabled = false
+input_method = "cdp"
+
+[autoplay.majsoul]
+pre_click_delay_min_ms = 1000
+pre_click_delay_max_ms = 3000
+inter_click_delay_ms = 500
+hover_delay_ms = 300
+click_hold_ms = 200
+verify_input_ms = 300
+click_retries = 1
+reload_after_failures = 3
+dealer_first_discard_extra_delay_ms = 500
+
+[autoplay.majsoul.coords]
+
+[autoplay.delay]
+mode = "lua"
+min_delay_ms = 600
+min_button_delay_ms = 1000
+bank_on_long_thought = false
+
+[autoplay.full_auto]
+enabled = false
+room = "auto"
+mode = "south3"
+max_games = 0
+show_risk_warning = false
+show_start_prompt = false
+
+[autoplay.full_auto.coords]
+
+[game]
+start_url = "https://game.maj-soul.com/1/"
+zoom = 1.0
+panel_width = 220
+linux_gpu = "auto"
+tile_highlight = true
+block_telemetry = true

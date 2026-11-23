@@ -1,0 +1,17 @@
+{
+  "architecture": "epsilon-prism-v3",
+  "inputSchema": "f22b982987b2d084",
+  "headSchema": "396d676ebb8abdb3",
+  "shape": {
+    "hidden": 256,
+    "ffn": 512,
+    "gate": 512,
+    "depth": 3,
+    "typed": {
+      "tile": 768,
+      "context": 1536,
+      "candidate": 1024,
+      "reread": true
+    }
+  }
+}
