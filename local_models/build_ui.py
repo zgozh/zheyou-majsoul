@@ -84,6 +84,11 @@ def main():
     source = replace_once(source, b",(0,G.jsxs)(J,{variant:`outline`,size:`sm`,onClick:()=>qC(KC),children:[(0,G.jsx)(kC,{className:`h-4 w-4 mr-1.5`}),`Discord`]})", b"")
     source = replace_once(source, b"(0,G.jsx)(uw,{label:e(`sidebar.announcements`),collapsed:!h,onClick:()=>$C.getState().openHistory(),children:(0,G.jsx)(Rc,{className:`h-4 w-4`})}),", b"")
     source = replace_once(source, b"(0,S.useEffect)(()=>{HC&&El().then(m).catch(()=>{})},[]),", b"")
+    center_brand = (b",(e||s(Nee))&&(0,G.jsx)(`div`,{className:`pointer-events-none absolute inset-0 flex items-center justify-center`,"
+                    b"children:(0,G.jsxs)(`span`,{className:`flex items-center gap-1.5`,children:[(0,G.jsx)(PC,{className:`h-4 w-4`}),"
+                    b"(0,G.jsx)(`span`,{className:`text-xs font-medium text-muted-foreground`,children:`AkagiMS`})]})})")
+    source = replace_once(source, center_brand, b"")
+    source = replace_once(source, b",Nee=760", b"")
     source = source.replace(b"akagi.", b"zheyou.")
     source = re.sub(rb"\bAkagi(?:MS)?\b", "柘栯".encode(), source)
     source = replace_once(source, b"function wee(){", component + b"\nfunction wee(){")
@@ -114,11 +119,24 @@ def main():
         b"[recommendation,c]=(0,S.useMemo)(()=>{for(let t=e.length-1;t>=0;t--){let n=_D(e[t].meta);"
         b"if(n)return [e[t],yD(n,Ree)]}return [null,[]]},[e]);")
     source = replace_once(source, b"className:W(`flex items-center gap-2 rounded px-2 py-1.5`,i&&`bg-yellow-500/15`)",
-        b"className:W(`rounded`,i&&`bg-yellow-500/15`)")
+        b"className:W(`min-w-0 rounded`,i&&`bg-yellow-500/15`)")
+    source = replace_once(source, b"className:`flex items-center gap-2 border-b border-border px-3 py-2`,children:[(0,G.jsx)(dc,",
+        b"className:`flex flex-wrap items-center gap-2 border-b border-border px-3 py-2`,children:[(0,G.jsx)(dc,")
+    source = replace_once(source, b"ref:n,className:`grid gap-px p-1`,children:c.map(",
+        b"ref:n,className:`grid gap-px p-1`,style:{gridTemplateColumns:`minmax(0, 1fr)`},children:c.map(")
     source = replace_once(source,
         b"gD(e.color,.08)}:void 0,children:[(0,G.jsxs)(`span`,{className:`w-6 shrink-0 font-mono text-[11px] text-muted-foreground`",
-        b"gD(e.color,.08)}:void 0,children:[G.jsxs(`div`,{className:`flex items-center gap-2 px-2 py-1.5`,children:["
-        b"(0,G.jsxs)(`span`,{className:`w-6 shrink-0 font-mono text-[11px] text-muted-foreground`")
+        b"gD(e.color,.08)}:void 0,children:[G.jsxs(`div`,{className:`flex flex-wrap items-center gap-2 px-2 py-1.5`,children:["
+        b"(0,G.jsxs)(`span`,{className:`w-4 shrink-0 font-mono text-[11px] text-muted-foreground`")
+    source = replace_once(source,
+        b"className:`shrink-0 rounded bg-muted px-1.5 py-0.5 text-[11px]`,children:e.label}),"
+        b"a&&(0,G.jsx)(mD,{seq:a,kind:`bot-show`,containerRef:n}),"
+        b"(0,G.jsxs)(`span`,{className:`ml-auto flex items-center gap-2`,children:[r!==null",
+        b"className:`min-w-0 rounded bg-muted px-1.5 py-0.5 text-[11px]`,style:{maxWidth:`100%`,overflowWrap:`anywhere`},children:e.label}),"
+        b"a&&G.jsx(`span`,{style:{minWidth:0,maxWidth:`100%`,overflowX:`auto`},children:G.jsx(mD,{seq:a,kind:`bot-show`,containerRef:n})}),"
+        b"(0,G.jsxs)(`span`,{className:`ml-auto flex min-w-0 flex-wrap items-center justify-end gap-2`,children:[r!==null")
+    source = replace_once(source, b"className:W(`w-12 shrink-0 text-right font-mono text-xs tabular-nums`,i?",
+        b"style:{overflowWrap:`anywhere`},className:W(`min-w-0 text-right font-mono text-xs tabular-nums`,i?")
     source = replace_once(source, b"children:e.value})]})]},`${e.label??``}-${a}-${t}`)",
         b'"data-recommendation-preference":"",children:ZheyouRecommendationValue(recommendation,e.value)})]})]}),'
         b"i&&round===recommendation?._recommendationEvents[0]&&"

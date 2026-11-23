@@ -391,6 +391,14 @@ def test_table(page, page_url, players, deck, model, action="dahai"):
                 assert wait(lambda: ui.evaluate(
                     '[...document.querySelectorAll("[data-recommendation-preference]")].filter(e=>e.textContent.includes("偏好")).length===3'
                 )), items
+                overflow = ui.evaluate('''(() => {
+                    const card = document.querySelector('[data-recommendation-preference]').closest('section');
+                    const rows = [card, ...card.querySelectorAll('header, ol, li')];
+                    return rows.filter(row => row.scrollWidth > row.clientWidth + 1)
+                        .map(row => [row.tagName, row.clientWidth, row.scrollWidth]);
+                })()''')
+                assert not overflow, f"Recommendation overflow at the default sidebar width: {overflow}"
+                assert ui.evaluate('!document.querySelector("[data-tauri-drag-region] > .pointer-events-none.absolute.inset-0")')
             else:
                 assert not any(external in title for external in (EPSILON, S42)), result
             outcome = wait(confirmed, seconds=6)
