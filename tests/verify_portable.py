@@ -3,20 +3,24 @@
 import ctypes
 from ctypes import wintypes
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import json
 import os
 from pathlib import Path
+import shutil
+import socket
 import subprocess
 import sys
 from tempfile import TemporaryDirectory
 from threading import Thread
 from urllib.error import HTTPError
+from urllib.request import urlopen
 from zipfile import ZipFile
 
 import psutil
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "local_models"))
 from server import EPSILON, S42, epsilon_opening
-from verify_offline import available_models, react_model, verify_ranked_recommendations, wait
+from verify_offline import DevTools, available_models, react_model, verify_ranked_recommendations, wait
 
 
 class TestPage(BaseHTTPRequestHandler):
@@ -56,6 +60,50 @@ def close_window(pid):
     for window in windows:
         if not user32.PostMessageW(window, 0x0010, 0, 0):
             raise ctypes.WinError(ctypes.get_last_error())
+
+
+def verify_first_run(executable):
+    with TemporaryDirectory(prefix="zheyou-setup-", ignore_cleanup_errors=True) as directory:
+        app = Path(directory)
+        client = app / executable.name
+        shutil.copy2(executable, client)
+        with socket.socket() as sock:
+            sock.bind(("127.0.0.1", 0))
+            port = sock.getsockname()[1]
+        env = dict(os.environ, WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=(
+            f'--remote-debugging-port={port} --no-proxy-server '
+            '--host-resolver-rules="MAP * ~NOTFOUND, EXCLUDE 127.0.0.1"'
+        ))
+        process = subprocess.Popen([str(client)], cwd=app, env=env)
+        ui = None
+
+        def target():
+            with urlopen(f"http://127.0.0.1:{port}/json/list", timeout=1) as reply:
+                return next((page for page in json.load(reply) if "tauri.localhost" in page["url"]), None)
+
+        def step(expected):
+            status = ui.evaluate('''(() => {
+                const steps = [...document.querySelectorAll(".h-1.flex-1.rounded")];
+                return {path: location.hash.slice(1) || location.pathname, total: steps.length,
+                        current: steps.filter(step => step.classList.contains("bg-primary")).length,
+                        text: document.body?.innerText.slice(0, 240) ?? ""};
+            })()''')
+            assert 'Unexpected Application Error' not in status['text'], status['text']
+            return (status['path'], status['total'], status['current']) == ('/setup', 4, expected)
+
+        try:
+            ui = DevTools(wait(target))
+            for expected in range(1, 5):
+                wait(lambda: step(expected))
+                if expected < 4:
+                    ui.evaluate('Array.from(document.querySelectorAll("button")).at(-1).click()')
+            print("First-run setup rendered all four steps", flush=True)
+        finally:
+            if ui:
+                ui.ws.close()
+            if process.poll() is None:
+                process.terminate()
+                process.wait(timeout=10)
 
 
 def run(package, web, exercise_recovery):
@@ -125,6 +173,7 @@ def main(archive_path):
             with ZipFile(archive_path) as archive:
                 archive.extractall(directory)
             package = Path(directory) / "zheyou-majsoul-windows-x64"
+            verify_first_run(package / "app/ZheyouClient.exe")
             config = package / "app/defaults/config.toml"
             config.write_text(config.read_text(encoding="utf-8").replace("https://game.maj-soul.com/1/",
                 f"http://127.0.0.1:{web.server_port}/login"), encoding="utf-8")

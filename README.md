@@ -6,6 +6,8 @@
 
 下载 Windows x64 便携 ZIP，解压完整目录，双击 `Zheyou.exe`。模型和运行依赖随包提供。首次打开后在雀魂界面自行登录，后续启动复用本机的登录状态。Windows 需要 Microsoft Edge WebView2 Runtime。 [GitHub Releases](https://github.com/zgozh/zheyou-majsoul/releases/latest)
 
+`Zheyou.exe` 负责启动本地推理服务和界面。`app/ZheyouClient.exe` 是它自动调用的界面程序。
+
 使用前请确认训练场景允许 AI 辅助。请勿用于真人匹配、段位战、赛事、赌博，或其他禁止 AI 辅助的场景。请遵守所在区服的用户协议、房间规则和适用法律。 [雀魂官方规则入口](https://mahjongsoul.com/)
 
 ## 免责声明

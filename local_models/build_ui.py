@@ -71,7 +71,7 @@ def main():
         (b"var JC=`1.3.2`,YC=[", b"function XC(", b"var JC=`0.1.0`,YC=[];"),
         (b"function PC(", b"var IC;", b"function PC({className:e}){return G.jsx(`span`,{className:W(`font-semibold`,e),children:`Z`})}"
          b"function FC({className:e}){return G.jsx(`span`,{className:W(`font-semibold`,e),children:`Zheyou`})}"),
-        (b"function zne(", b"function $9(", b"function zne(){return G.jsxs(`p`,{className:`text-sm`,children:"
+        (b"function zne(", b"var Q9=", b"function zne(){return G.jsxs(`p`,{className:`text-sm`,children:"
          b"[`Zheyou v`,JC,` | `,G.jsx(`button`,{type:`button`,className:`underline`,onClick:()=>qC(WC+`/releases`),children:`GitHub Releases`})]})}"),
     ):
         start = source.index(start_name)
